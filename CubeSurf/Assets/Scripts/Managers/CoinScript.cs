@@ -47,19 +47,22 @@ public class CoinScript : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         for (int i = 0; i < maxCoins; i++)
         {
-            GameObject coin = coinsQueue.Dequeue();
-            coin.SetActive(true);
-            coin.transform.position = origin.position + new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 0f);
-            float duration = Random.Range(minDuration, maxDuration);
-            seq.Insert(0, coin.transform.DOMove(target.position, duration)
-                .SetEase(easeType)
-                .OnComplete(() =>
-                {
-                    coins++;
-                    coinCounter.text = coins.ToString();
-                    coin.SetActive(false);
-                    coinsQueue.Enqueue(coin);
-                }));
+            if (coinsQueue.Count > 0)
+            {
+                GameObject coin = coinsQueue.Dequeue();
+                coin.SetActive(true);
+                coin.transform.position = origin.position + new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 0f);
+                float duration = Random.Range(minDuration, maxDuration);
+                seq.Insert(0, coin.transform.DOMove(target.position, duration)
+                    .SetEase(easeType)
+                    .OnComplete(() =>
+                    {
+                        coins++;
+                        coinCounter.text = coins.ToString();
+                        coin.SetActive(false);
+                        coinsQueue.Enqueue(coin);
+                    }));
+            }
         }
         seq.AppendInterval(1f);
         return seq;
