@@ -10,7 +10,7 @@ public class TagLayerCompare : MonoBehaviour
     /// <returns>совпадение тэгов</returns>
     public static bool CompareTag(string tag, GameObject go)
     {
-        if (go.tag.Equals(tag))
+        if (go.CompareTag(tag))
         {
             return true;
         }

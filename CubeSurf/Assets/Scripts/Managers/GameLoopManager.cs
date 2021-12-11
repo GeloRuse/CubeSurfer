@@ -17,10 +17,12 @@ public class GameLoopManager : MonoBehaviour
     private Transform border1; //граница уровня 1
     [SerializeField]
     private Transform border2; //граница уровня 2
+    [SerializeField]
+    private float borderOffset = 1.5f;
 
     private void Start()
     {
-        player.AssignClamp(ClampCalc.Calculate(border1, border2));
+        player.AssignClamp(ClampCalc.Calculate(border1, border2, borderOffset));
     }
 
     private void OnEnable()
